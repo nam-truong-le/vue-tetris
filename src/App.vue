@@ -24,7 +24,7 @@
       </div>
     </div>
     <Keyboard :filling='filling' />
-    <Guide/>
+<!--    <Guide/>-->
   </div>
 </template>
 
