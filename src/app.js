@@ -12,10 +12,29 @@ import { mapState } from 'vuex'
 import { transform, lastRecord, speeds, i18n, lan } from './unit/const'
 import { visibilityChangeEvent, isFocus } from './unit/'
 import states from './control/states'
+import store from './vuex/store'
+import todo from './control/todo'
+
+const KEY_MAP = new Map([
+  ['ArrowUp', 'rotate'],
+  ['ArrowDown', 'down'],
+  ['ArrowLeft', 'left'],
+  ['ArrowRight', 'right'],
+  [' ', 'space'],
+  ['p', 'p'],
+  ['r', 'r'],
+  ['s', 's']
+]);
+
 export default {
   mounted() {
     this.render()
     window.addEventListener('resize', this.resize.bind(this), true)
+    window.addEventListener('message', (e) => {
+      const [type, key] = e.data;
+      const action = KEY_MAP.get(key);
+      todo[action] && todo[action][type](store);
+    });
   },
   data() {
     return {
